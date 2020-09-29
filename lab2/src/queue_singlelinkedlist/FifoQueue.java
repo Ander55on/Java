@@ -102,6 +102,39 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 		}
 	}
 
+	/**
+	 * Appends the specified queue to this queue post: all elements from the
+	 * specified queue is empty after the call.
+	 * 
+	 * @param q the queue to append
+	 * @throws IllegalArgumentException if this queue and q are identical
+	 */
+	public void append(FifoQueue<E> q) {
+		if (this.equals(q)) {
+			throw new IllegalArgumentException();
+		}
+
+		if (this.size == 0) {
+			this.last = q.last;
+		} else if (q.size != 0) {
+			// Retrieve the old last node and the first node
+			QueueNode<E> oldLast = this.last;
+			QueueNode<E> first = this.last.next;
+
+			// Link the old last node with the first of the appended list
+			oldLast.next = q.last.next;
+
+			// Set the last node to be the last node of the appended list
+			this.last = q.last;
+
+			// Link the last node to the first node
+			last.next = first;
+		}
+
+		this.size = this.size + q.size;
+		q.size = 0;
+	}
+
 	private class QueueIterator implements Iterator<E> {
 
 		private QueueNode<E> pos;
@@ -127,15 +160,14 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 				throw new NoSuchElementException();
 			}
 
-			E e = pos.next.element; //Retrieve the next element
-			pos = pos.next;			//Move the pointer
-		
-			
-			// If The pointer is at the start of the queue set that node to be the end	 
-			if(pos.equals(last.next)) { 
+			E e = pos.next.element; // Retrieve the next element
+			pos = pos.next; // Move the pointer
+
+			// If The pointer is at the start of the queue set that node to be the end
+			if (pos.equals(last.next)) {
 				end = pos;
 			}
-		
+
 			return e;
 		}
 
