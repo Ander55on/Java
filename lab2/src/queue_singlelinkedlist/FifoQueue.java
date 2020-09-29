@@ -52,7 +52,7 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 	 * @return the head element of this queue, or null if this queue is empty
 	 */
 	public E peek() {
-		if(size == 0) {
+		if (size == 0) {
 			return null;
 		}
 		return last.next.element;
@@ -75,9 +75,9 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 			last.next = null;
 			last = null;
 		} else {
-			last.next = head.next; //Set last.next to reference the second oldest node
+			last.next = head.next; // Set last.next to reference the second oldest node
 		}
-		
+
 		size--;
 		return head.element;
 
@@ -89,7 +89,7 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 	 * @return an iterator over the elements in this queue
 	 */
 	public Iterator<E> iterator() {
-		return null;
+		return new QueueIterator();
 	}
 
 	private static class QueueNode<E> {
@@ -100,6 +100,45 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 			element = x;
 			next = null;
 		}
+	}
+
+	private class QueueIterator implements Iterator<E> {
+
+		private QueueNode<E> pos;
+		private QueueNode<E> end;
+
+		public QueueIterator() {
+			pos = last;
+		}
+
+		@Override
+		public boolean hasNext() {
+			// Empty queue
+			if (pos == null) {
+				return false;
+			}
+
+			return !pos.next.equals(end);
+		}
+
+		@Override
+		public E next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+
+			E e = pos.next.element; //Retrieve the next element
+			pos = pos.next;			//Move the pointer
+		
+			
+			// If The pointer is at the start of the queue set that node to be the end	 
+			if(pos.equals(last.next)) { 
+				end = pos;
+			}
+		
+			return e;
+		}
+
 	}
 
 }
