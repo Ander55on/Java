@@ -153,7 +153,7 @@ class TestFifoQueue {
 	/**
 	 * Test iterator on empty queue.
 	 */
-	@Disabled
+	
 	@Test
 	void testIteratorEmptyQueue() {
 		Iterator<Integer> itr = myIntQueue.iterator();
@@ -163,8 +163,7 @@ class TestFifoQueue {
 
 	/**
 	 * Test iterator on non empty queue.
-	 */
-	@Disabled
+	 */	
 	@Test
 	void testIteratorNonEmptyQueue() {
 		int nbr = 5;
@@ -185,7 +184,7 @@ class TestFifoQueue {
 	 * Test iterator multiple times, to ensure that the iterator does not modify the
 	 * queue.
 	 */
-	@Disabled
+
 	@Test
 	void testThreeIterators() {
 		int nbr = 5;
