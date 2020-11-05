@@ -22,7 +22,7 @@ public class BookReaderController {
 	private SortedListModel<Map.Entry<String, Integer>> listModel;
 
 	public BookReaderController(GeneralWordCounter counter) {
-		SwingUtilities.invokeLater(() -> createWindow(counter, "BookReader", 200, 300));
+		SwingUtilities.invokeLater(() -> createWindow(counter, "BookReader", 500, 300));
 		listModel = new SortedListModel<>(counter.getWordList());
 	}
 
@@ -109,12 +109,12 @@ public class BookReaderController {
 		}
 		
 		int index = 0;
-		int oldIndex = index;
+		int oldIndex = -1;
 		
 		while (!word.equals(listModel.getElementAt(index).getKey())) {
 			index = list.getNextMatch(word, index + 1, Position.Bias.Forward);
 
-			if (index == -1 || oldIndex > index) {
+			if (index == -1 || oldIndex > index || index == oldIndex) {
 				return -1;
 			}
 
