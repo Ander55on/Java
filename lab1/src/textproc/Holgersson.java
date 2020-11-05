@@ -13,7 +13,7 @@ public class Holgersson {
 	public static final String[] REGIONS = { "blekinge", "bohuslän", "dalarna", "dalsland", "gotland", "gästrikland",
 			"halland", "hälsingland", "härjedalen", "jämtland", "lappland", "medelpad", "närke", "skåne", "småland",
 			"södermanland", "uppland", "värmland", "västerbotten", "västergötland", "västmanland", "ångermanland",
-			"öland", "västergötland" };
+			"öland", "östergötland" };
 
 	public static void main(String[] args) throws FileNotFoundException {
 		List<TextProcessor> wordCounters = new ArrayList<>();
