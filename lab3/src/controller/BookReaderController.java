@@ -112,11 +112,12 @@ public class BookReaderController {
 		int oldIndex = -1;
 		
 		while (!word.equals(listModel.getElementAt(index).getKey())) {
+
 			index = list.getNextMatch(word, index + 1, Position.Bias.Forward);
 
 			if (index == -1 || oldIndex > index || index == oldIndex) {
 				return -1;
-			}
+			} 
 
 			oldIndex = index;
 		}
