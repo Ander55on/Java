@@ -6,6 +6,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		BSTVisualizer visualizer = new BSTVisualizer("Binary", 500, 500);
 		
+		//BinarySearchTree<Integer> balancedTree = new BinarySearchTree<>((x,y) -> -(x - y));
 		BinarySearchTree<Integer> balancedTree = new BinarySearchTree<>();
 	
 		balancedTree.add(10);
@@ -46,11 +47,14 @@ public class Main {
 		skevt.add(3);
 		skevt.add(1);
 		skevt.add(9);
+		skevt.add(10);
 		skevt.add(11);
+		skevt.add(12);
 		skevt.add(7);
 		
 		skevt.rebuild();
 		visualizer.drawTree(skevt);
+		
 		
 	}
 

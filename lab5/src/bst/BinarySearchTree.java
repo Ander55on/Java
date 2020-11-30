@@ -7,13 +7,16 @@ public class BinarySearchTree<E> {
 	BinaryNode<E> root; // Används också i BSTVisaulizer
 	int size; // Används också i BSTVisaulizer
 	private Comparator<E> comparator;
-
+	private boolean addReturn;
+	
 	/**
 	 * Constructs an empty binary search tree.
 	 */
-	public BinarySearchTree() {
+	@SuppressWarnings("unchecked")
+	public BinarySearchTree () {
 		this.root = null;
 		this.size = 0;
+		comparator = (x, y) -> ((Comparable<E>)x).compareTo(y);
 	}
 
 	/**
@@ -33,12 +36,38 @@ public class BinarySearchTree<E> {
 	 * @return true if the the element was inserted
 	 */
 	public boolean add(E x) {
-		if(root == null) {
+	/*	if(root == null) {
 			root = new BinaryNode<E>(x);
 			size++;
 			return true;
 		}
-		return add(root, x, null, -1);
+		return add(root, x, null, -1); */
+		
+		this.root = add(root, x);
+		return addReturn;
+	}
+	
+	private BinaryNode<E> add(BinaryNode<E> n, E x) {
+		
+		if(n == null) {
+			addReturn = true;
+			size++;
+			return new BinaryNode<E>(x);
+		}
+				
+		int result = comparator.compare(x, n.element);
+		
+		if(result == 0) {
+			addReturn = false;
+			
+		} else if(result < 0) {
+			n.left = add(n.left, x);
+			
+		} else {
+			n.right = add(n.right,x);			
+		}
+		
+		 return n;			 
 	}
 
 	@SuppressWarnings("unchecked")
@@ -130,7 +159,7 @@ public class BinarySearchTree<E> {
 	public void rebuild() {
 		ArrayList<E> arr = new ArrayList<>();
 	    toArray(root, arr);
-	    root =  buildTree(arr, 0, arr.size() - 1);
+	    this.root =  buildTree(arr, 0, arr.size() - 1); // build on the root
 	}
 
 	/*
@@ -155,7 +184,8 @@ public class BinarySearchTree<E> {
 		if(first > last) {
 			return null;
 		}
-		int mid = (first + last) / 2;
+		
+		int mid = first + (last - first) / 2;
 		
 		BinaryNode<E> node = new BinaryNode<E>(sorted.get(mid));
 		node.left = buildTree(sorted, first, mid - 1);
